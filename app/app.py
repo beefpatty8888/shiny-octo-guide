@@ -3,8 +3,10 @@ from flask import render_template
 app = Flask(__name__)
 # https://stackoverflow.com/questions/34066804/disabling-caching-in-flask
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+properName = "Elvis Presley"
+nickName = "The King"
 name = "The King - Elvis Presley"
 
 @app.route('/')
 def index_page():
-    return render_template ('index.html', name=name)
+    return render_template ('index.html', title=nickName+" - "+properName,properName=properName)
