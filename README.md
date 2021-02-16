@@ -37,9 +37,9 @@ gcloud services enable containerregistry.googleapis.com
 
 ## Properly Tag The Container And Push To Google Cloud Container Registry
 ```
-docker tag flask-gunicorn:$(date +%F) gcr.io/<project_id>/flask-gunicorn:$(date +%F)
+docker tag flask-gunicorn:$(date +%F) gcr.io/<project_id>/flask-gunicorn:v1.0
 
-docker push gcr.io/<project_id>/flask-gunicorn:$(date +%F)
+docker push gcr.io/<project_id>/flask-gunicorn:v1.0
 ```
 ## Install kubectl
 For MacOS and Windows - https://kubernetes.io/docs/tasks/tools/install-kubectl/
@@ -58,12 +58,30 @@ Configuration will be at `~/.kube/config`
 gcloud container clusters get-credentials <cluster_name> 
 ```
 
-## GKE Container Deployment
+## GKE App Deployment (YAML)
 ```
-kubectl create deployment flask-gunicorn --image=gcr.io/<project_id>/flask-gunicorn:$(date +%F)
+vi k8s-deployment/app-deployment.yml
+```
+On line 17, replace the `<project_id>` with the actual Google Cloud project id for the deployment.
+
+Then, deploy the application.
+```
+kubectl apply -f app-deployment.yml
 ```
 
-## GKE Service, Ingress Deployment
+## GKE Service Deployment (YAML)
+NOTE: In the service deployment, I had set the type to `LoadBalancer` which automatically assigns an external IP address. If this type is removed, then typically an Ingress deployment would also be required: https://kubernetes.io/docs/concepts/services-networking/ingress/, https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
+
+```
+kubectl apply -f service-deployment.yml
+```
+
+## GKE App Deployment (Command-Line)
+```
+kubectl create deployment flask-gunicorn --image=gcr.io/<project_id>/flask-gunicorn:v1.0
+```
+
+## GKE Service, Ingress Deployment (Command-Line)
 ```
 kubectl expose deployment flask-gunicorn --type=LoadBalancer --name=flask-gunicorn-service --port=80 --target-port=8000
 ```
@@ -81,4 +99,6 @@ From browser on local desktop, go to http://<EXTERNAL_IP>
 * https://flask.palletsprojects.com/en/1.1.x/quickstart/ - official Flask documentation
 * https://getbootstrap.com/docs/5.0/examples/ - Bootstrap javascript examples
 * https://cloud.google.com/kubernetes-engine/docs/quickstart - GKE deployment Quickstart
+* https://kubernetes.io/docs/concepts/workloads/controllers/deployment/ - Kubernetes - App Deployment
+* https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer - Kubernetes - Load balancer Service Deployment
 
