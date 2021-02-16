@@ -58,7 +58,9 @@ Configuration will be at `~/.kube/config`
 gcloud container clusters get-credentials <cluster_name> 
 ```
 
-## GKE App Deployment (YAML)
+## Deployments To The GKE Cluster
+
+### GKE App Deployment (YAML)
 ```
 cd k8s-deployment
 
@@ -71,19 +73,19 @@ Then, deploy the application.
 kubectl apply -f app-deployment.yml
 ```
 
-## GKE Service Deployment (YAML)
+### GKE Service Deployment (YAML)
 NOTE: In the service deployment, I had set the type to `LoadBalancer` which automatically assigns an external IP address. If this type is removed, then typically an Ingress deployment would also be required: https://kubernetes.io/docs/concepts/services-networking/ingress/, https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
 
 ```
 kubectl apply -f service-deployment.yml
 ```
 
-## GKE App Deployment (Command-Line)
+### GKE App Deployment (Command-Line)
 ```
 kubectl create deployment flask-gunicorn --image=gcr.io/<project_id>/flask-gunicorn:v1.0
 ```
 
-## GKE Service Deployment (Command-Line)
+### GKE Service Deployment (Command-Line)
 ```
 kubectl expose deployment flask-gunicorn --type=LoadBalancer --name=flask-gunicorn-service --port=80 --target-port=8000
 ```
