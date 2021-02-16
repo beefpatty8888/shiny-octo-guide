@@ -60,7 +60,9 @@ gcloud container clusters get-credentials <cluster_name>
 
 ## GKE App Deployment (YAML)
 ```
-vi k8s-deployment/app-deployment.yml
+cd k8s-deployment
+
+vi app-deployment.yml
 ```
 On line 17, replace the `<project_id>` with the actual Google Cloud project id for the deployment.
 
@@ -81,7 +83,7 @@ kubectl apply -f service-deployment.yml
 kubectl create deployment flask-gunicorn --image=gcr.io/<project_id>/flask-gunicorn:v1.0
 ```
 
-## GKE Service, Ingress Deployment (Command-Line)
+## GKE Service Deployment (Command-Line)
 ```
 kubectl expose deployment flask-gunicorn --type=LoadBalancer --name=flask-gunicorn-service --port=80 --target-port=8000
 ```
