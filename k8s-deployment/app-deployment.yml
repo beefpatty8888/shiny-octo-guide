@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-gunicorn
-        image: gcr.io/<project_id>/flask-gunicorn:v1.0
+        image: gcr.io/<project_id>/flask-gunicorn:v1.2
         ports:
         - containerPort: 8000
         imagePullPolicy: Always
