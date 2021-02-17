@@ -9,7 +9,7 @@ docker build --no-cache -t flask-gunicorn:$(date +%F) .
 
 ## Running the Docker image
 ```
-docker run -it --rm --expose 8000 -p 8000:8000/tcp flask-gunicorn:$(date +%F)
+docker run -it --rm --expose 8000 -e ENV='local' -p 8000:8000/tcp flask-gunicorn:$(date +%F)
 ```
 
 Then, from the desktop, go to http://localhost:8000/
