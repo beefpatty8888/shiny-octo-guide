@@ -37,9 +37,9 @@ gcloud services enable containerregistry.googleapis.com
 
 ## Properly Tag The Container And Push To Google Cloud Container Registry
 ```
-docker tag flask-gunicorn:$(date +%F) gcr.io/<project_id>/flask-gunicorn:v1.0
+docker tag flask-gunicorn:$(date +%F) gcr.io/<project_id>/flask-gunicorn:v1.2
 
-docker push gcr.io/<project_id>/flask-gunicorn:v1.0
+docker push gcr.io/<project_id>/flask-gunicorn:v1.2
 ```
 ## Install kubectl
 For MacOS and Windows - https://kubernetes.io/docs/tasks/tools/install-kubectl/
@@ -48,8 +48,11 @@ sudo apt-get install kubectl
 ```
 ## Create GKE Cluster
 NOTE: f1-micro cannot be selected as the machine type as there is insufficient memory.
+
+Also, I have expanded the scope to allow read-only access to the Compute API. This is generally not recommended in production, but for this basic flask, gunicorn application, I plan to output some debugging information from the instance metadata such as the name of the instance, IP address, etc.
+
 ```
-gcloud container clusters create <cluster-name> --num-nodes=2 --machine-type=g1-small
+gcloud container clusters create <cluster-name> --num-nodes=2 --machine-type=g1-small --scopes=https://www.googleapis.com/auth/compute.readonly,gke-default
 ```
 
 ## Configure kubectl
@@ -82,7 +85,7 @@ kubectl apply -f service-deployment.yml
 
 ### GKE App Deployment (Command-Line)
 ```
-kubectl create deployment flask-gunicorn --image=gcr.io/<project_id>/flask-gunicorn:v1.0
+kubectl create deployment flask-gunicorn --image=gcr.io/<project_id>/flask-gunicorn:v1.2
 ```
 
 ### GKE Service Deployment (Command-Line)
@@ -105,4 +108,5 @@ From browser on local desktop, go to http://<EXTERNAL_IP>
 * https://cloud.google.com/kubernetes-engine/docs/quickstart - GKE deployment Quickstart
 * https://kubernetes.io/docs/concepts/workloads/controllers/deployment/ - Kubernetes - App Deployment
 * https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer - Kubernetes - Load balancer Service Deployment
+* https://cloud.google.com/sdk/gcloud/reference/container/clusters/create#--scopes - gke cluster creation API scopes
 

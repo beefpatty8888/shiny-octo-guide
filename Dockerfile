@@ -2,7 +2,7 @@ FROM ubuntu:bionic
 
 RUN apt update
 RUN apt install curl git gnupg2 build-essential zlib1g-dev sudo python3-pip -y
-RUN pip3 install Flask gunicorn
+RUN pip3 install Flask gunicorn requests
 RUN useradd -m app
 RUN echo 'app ALL=(ALL) NOPASSWD: /usr/bin/apt,/usr/bin/apt-get' >> /etc/sudoers.d/app
 RUN mkdir /app
