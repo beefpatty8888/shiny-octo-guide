@@ -15,7 +15,7 @@ metadataHeader = {'Metadata-flavor': 'Google'}
 
 def getInstanceName():
 
-    if os.environ['ENV'] and os.environ['ENV'] == 'local':
+    if os.environ['ENV'] == 'local':
         returnText = "App Not Deployed in GKE"
     else:
         metadataRequest = requests.get(metadataURL+"/computeMetadata/v1/instance/name",headers=metadataHeader)
@@ -24,7 +24,7 @@ def getInstanceName():
     return returnText
 
 def getInstanceExternalIP():
-    if os.environ['ENV'] and os.environ['ENV'] == 'local':
+    if os.environ['ENV'] == 'local':
         returnText = "App Not Deployed in GKE"
     else:
         metadataRequest = requests.get(metadataURL+"/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip",headers=metadataHeader)

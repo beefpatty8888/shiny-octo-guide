@@ -17,4 +17,7 @@ spec:
         image: gcr.io/<project_id>/flask-gunicorn:v1.2
         ports:
         - containerPort: 8000
+        env:
+        - name: "ENV"
+          value: "GKE" 
         imagePullPolicy: Always
