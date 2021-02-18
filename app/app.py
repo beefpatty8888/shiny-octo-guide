@@ -13,6 +13,9 @@ name = properName+" - "+nickName
 metadataURL = "http://metadata.google.internal"
 metadataHeader = {'Metadata-flavor': 'Google'}
 
+if not os.environ['ENV']:
+    raise RuntimeError("ENV environment variable not set.")
+
 def getInstanceName():
 
     if os.environ['ENV'] == 'local':
