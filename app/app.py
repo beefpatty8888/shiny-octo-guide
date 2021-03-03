@@ -35,23 +35,31 @@ def getInstanceExternalIP():
 
     return returnText
 
+def getEgressIP():
+    egressIP = requests.get("http://ifconfig.me/ip")
+    returnText = egressIP.text
+
+    return returnText
+
 @app.route('/')
 def index_page():
 
     instanceName = getInstanceName()
     instanceExternalIP = getInstanceExternalIP()
+    egressIP = getEgressIP()
 
     homeStateCSS = "active"
     alwaysOnMyMindStateCSS = ""
-    return render_template ('index.html', title=nickName+" - "+properName,properName=properName,instanceName=instanceName, instanceExternalIP=instanceExternalIP, homeStateCSS=homeStateCSS, alwaysOnMyMindStateCSS=alwaysOnMyMindStateCSS)
+    return render_template ('index.html', title=nickName+" - "+properName,properName=properName,instanceName=instanceName, instanceExternalIP=instanceExternalIP, egressIP=egressIP, homeStateCSS=homeStateCSS, alwaysOnMyMindStateCSS=alwaysOnMyMindStateCSS)
 
 @app.route('/always-on-my-mind')
 def always_on_my_mind_page():
     
     instanceName = getInstanceName()
     instanceExternalIP = getInstanceExternalIP()
+    egressIP = getEgressIP()
 
     homeStateCSS = ""
     alwaysOnMyMindStateCSS = "active"
-    return render_template ('always-on-my-mind.html',title=nickName+" - "+properName,instanceName=instanceName, instanceExternalIP=instanceExternalIP, homeStateCSS=homeStateCSS, alwaysOnMyMindStateCSS=alwaysOnMyMindStateCSS)
+    return render_template ('always-on-my-mind.html',title=nickName+" - "+properName,instanceName=instanceName, instanceExternalIP=instanceExternalIP, egressIP=egressIP, homeStateCSS=homeStateCSS, alwaysOnMyMindStateCSS=alwaysOnMyMindStateCSS)
 

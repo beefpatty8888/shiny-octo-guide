@@ -37,9 +37,9 @@ gcloud services enable containerregistry.googleapis.com
 
 ## Properly Tag The Container And Push To Google Cloud Container Registry
 ```
-docker tag flask-gunicorn:$(date +%F) gcr.io/<project_id>/flask-gunicorn:v1.2
+docker tag flask-gunicorn:$(date +%F) gcr.io/<project_id>/flask-gunicorn:v1.3
 
-docker push gcr.io/<project_id>/flask-gunicorn:v1.2
+docker push gcr.io/<project_id>/flask-gunicorn:v1.3
 ```
 ## Install kubectl
 For MacOS and Windows - https://kubernetes.io/docs/tasks/tools/install-kubectl/
