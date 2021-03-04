@@ -2,6 +2,9 @@ from flask import Flask
 from flask import render_template
 import os
 import requests
+import subprocess
+from subprocess import PIPE
+
 
 app = Flask(__name__)
 # https://stackoverflow.com/questions/34066804/disabling-caching-in-flask
@@ -36,8 +39,8 @@ def getInstanceExternalIP():
     return returnText
 
 def getEgressIP():
-    egressIP = requests.get("http://ifconfig.me/ip")
-    returnText = egressIP.text
+    egressIP = subprocess.run(["dig", "+short","myip.opendns.com", "@resolver1.opendns.com"], stdout=PIPE, stderr=PIPE).stdout
+    returnText = egressIP.decode('ascii')
 
     return returnText
 
