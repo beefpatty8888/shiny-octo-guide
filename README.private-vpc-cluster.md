@@ -9,7 +9,7 @@ Also, in the Google Cloud VPC, it may be necessary to create a new Cloud NAT (an
 
 Below is an example that uses a VPC named `elvis-gke` with the subnet in the VPC named `elvis-gke-vpc-subnet-01 ` 
 ```
-gcloud container clusters create <cluster-name> --network=elvis-gke --subnetwork=elvis-gke-vpc-subnet-01  --cluster-secondary-range-name=gke-pods --services-secondary-range-name=gke-services --enable-private-nodes --enable-ip-alias --enable-master-global-access --no-enable-master-authorized-networks --master-ipv4-cidr 172.16.0.16/28 --num-nodes=2 --machine-type=g1-small --scopes=https://www.googleapis.com/auth/compute.readonly,gke-default
+gcloud container clusters create <cluster-name> --network=elvis-gke --subnetwork=elvis-gke-vpc-subnet-01  --cluster-secondary-range-name=gke-pods --services-secondary-range-name=gke-services --enable-private-nodes --enable-ip-alias --enable-master-global-access --no-enable-master-authorized-networks --master-ipv4-cidr 172.16.0.16/28 --num-nodes=2 --machine-type=e2-small --scopes=https://www.googleapis.com/auth/compute.readonly,gke-default
 ```
 
 ## References
