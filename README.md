@@ -58,7 +58,7 @@ gcloud container clusters create <cluster-name> --num-nodes=2 --machine-type=e2-
 ## Configure kubectl
 Configuration will be at `~/.kube/config`
 ```
-gcloud container clusters get-credentials <cluster_name> 
+gcloud container clusters get-credentials <cluster_name> --zone us-central1-c
 ```
 
 ## Deployments To The GKE Cluster
