@@ -52,7 +52,7 @@ NOTE: f1-micro cannot be selected as the machine type as there is insufficient m
 Also, I have expanded the scope to allow read-only access to the Compute API. This is generally not recommended in production, but for this basic flask, gunicorn application, I plan to output some debugging information from the instance metadata such as the name of the instance, IP address, etc.
 
 ```
-gcloud container clusters create <cluster-name> --num-nodes=2 --machine-type=e2-small --scopes=https://www.googleapis.com/auth/compute.readonly,gke-default
+gcloud container clusters create <cluster-name> --num-nodes=2 --machine-type=e2-small --scopes=https://www.googleapis.com/auth/compute.readonly,gke-default --zone us-central1-c
 ```
 
 ## Configure kubectl
