@@ -76,7 +76,7 @@ kubectl apply -f app-deployment-eks.yml
 NOTE: In the service deployment, I had set the type to `LoadBalancer` which automatically assigns an external IP address. If this type is removed, then typically an Ingress deployment would also be required: https://kubernetes.io/docs/concepts/services-networking/ingress/, https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
 
 ```
-kubectl apply -f service-deployment.yml
+kubectl apply -f service-deployment-eks.yml
 ```
 
 ## Verify EKS Service Deployment and View External IP
