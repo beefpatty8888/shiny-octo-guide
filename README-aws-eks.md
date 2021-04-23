@@ -30,9 +30,9 @@ aws ecr create-repository --repository-name flask-python --image-scanning-config
 
 ## Properly Tag The Container And Push To AWS Container Registry
 ```
-docker tag flask-gunicorn:$(date +%F) [aws_account_id].dkr.ecr.us-east-2.amazonaws.com/flask-python:v1.4
+docker tag flask-gunicorn:$(date +%F) [aws_account_id].dkr.ecr.us-east-2.amazonaws.com/flask-python:v1.5
 
-docker push [aws_account_id].dkr.ecr.us-east-2.amazonaws.com/flask-python:v1.4
+docker push [aws_account_id].dkr.ecr.us-east-2.amazonaws.com/flask-python:v1.5
 ```
 ## Install kubectl
 For MacOS and Windows - https://kubernetes.io/docs/tasks/tools/install-kubectl/
@@ -42,7 +42,7 @@ sudo apt-get install kubectl
 ## Create EKS Cluster
 
 ```
-cd vpc-eks
+cd aws-eks
 
 terraform init
 
@@ -57,9 +57,9 @@ Configuration will be at `~/.kube/config`
 aws eks --region us-east-2 update-kubeconfig --name [cluster_name]
 ```
 
-## Deployments To The GKE Cluster
+## Deployments To The EKS Cluster
 
-### GKE App Deployment (YAML)
+### EKS App Deployment (YAML)
 ```
 cd k8s-deployment
 
@@ -79,7 +79,7 @@ NOTE: In the service deployment, I had set the type to `LoadBalancer` which auto
 kubectl apply -f service-deployment.yml
 ```
 
-## Verify GKE Service Deployment and View External IP
+## Verify EKS Service Deployment and View External IP
 ```
 kubectl get services flask-gunicorn-service
 ```

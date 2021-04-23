@@ -13,28 +13,40 @@ properName = "Elvis Presley"
 nickName = "The King"
 name = properName+" - "+nickName
 
-metadataURL = "http://metadata.google.internal"
-metadataHeader = {'Metadata-flavor': 'Google'}
+metadataURLGKE = "http://metadata.google.internal"
+metadataHeaderGKE = {'Metadata-flavor': 'Google'}
+
+metadataURLEKS = "http://169.254.169.254"
 
 if not os.environ['ENV']:
     raise RuntimeError("ENV environment variable not set.")
 
 def getInstanceName():
 
-    if os.environ['ENV'] == 'local':
-        returnText = "App Not Deployed in GKE"
-    else:
-        metadataRequest = requests.get(metadataURL+"/computeMetadata/v1/instance/name",headers=metadataHeader)
+    if os.environ['ENV'] == 'GKE':
+        metadataRequest = requests.get(metadataURLGKE+"/computeMetadata/v1/instance/name",headers=metadataHeader)
         returnText = metadataRequest.text
+    elif os.environ['ENV'] == 'EKS':
+        metadataRequest = requests.get(metadataURLEKS+"/latest/meta-data/instance-id")
+        returnText = metadataRequest.text
+    else:
+        returnText = "App Not Deployed in public cloud"
 
     return returnText
 
 def getInstanceExternalIP():
-    if os.environ['ENV'] == 'local':
-        returnText = "App Not Deployed in GKE"
-    else:
-        metadataRequest = requests.get(metadataURL+"/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip",headers=metadataHeader)
+    if os.environ['ENV'] == 'GKE':
+        metadataRequest = requests.get(metadataURLGKE+"/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip",headers=metadataHeader)
         returnText = metadataRequest.text
+    elif os.environ['ENV'] == 'EKS':
+        metadataRequest = requests.get(metadataURLEKS+"/latest/meta-data/public-ipv4")
+        # https://stackoverflow.com/questions/15258728/requests-how-to-tell-if-youre-getting-a-404
+        if metadataRequest.ok:
+            returnText = metadataRequest.text
+        else:
+            returnText = "No external IP"
+    else:
+        returnText = "App Not Deployed in public cloud"
 
     return returnText
 

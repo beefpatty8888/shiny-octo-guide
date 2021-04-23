@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-gunicorn
-        image: [aws_account_id].dkr.ecr.us-east-2.amazonaws.com/flask-python:v1.4
+        image: [aws_account_id].dkr.ecr.us-east-2.amazonaws.com/flask-python:v1.5
         ports:
         - containerPort: 8000
         env:
