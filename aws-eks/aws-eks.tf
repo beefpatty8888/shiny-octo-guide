@@ -431,7 +431,7 @@ resource "aws_eks_node_group" "eks_nodes" {
 
   scaling_config {
     # Example: Create EKS Node Group with 2 instances to start
-    desired_size = 3
+    desired_size = 2
     max_size     = 5
     min_size     = 2
   }
