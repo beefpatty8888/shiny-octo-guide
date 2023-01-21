@@ -14,10 +14,14 @@ spec:
     spec:
       containers:
       - name: flask-gunicorn
-        image: gcr.io/<project_id>/flask-gunicorn:v1.4
+        image: docker.io/library/flask-gunicorn:2023-01-21
         ports:
         - containerPort: 8000
         env:
         - name: "ENV"
-          value: "GKE" 
-        imagePullPolicy: Always
+          value: "minikube"
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name 
+        imagePullPolicy: Never

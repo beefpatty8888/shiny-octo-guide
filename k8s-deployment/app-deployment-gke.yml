@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
       - name: flask-gunicorn
-        image: [aws_account_id].dkr.ecr.us-east-2.amazonaws.com/flask-python:v1.5
+        image: gcr.io/<project_id>/flask-gunicorn:v1.4
         ports:
         - containerPort: 8000
         env:
         - name: "ENV"
-          value: "EKS"
+          value: "GKE"
         - name: MY_POD_NAME
           valueFrom:
             fieldRef:
-              fieldPath: metadata.name  
+              fieldPath: metadata.name 
         imagePullPolicy: Always
