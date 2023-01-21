@@ -18,19 +18,28 @@ metadataHeaderGKE = {'Metadata-flavor': 'Google'}
 
 metadataURLEKS = "http://169.254.169.254"
 
-if not os.environ['ENV']:
-    raise RuntimeError("ENV environment variable not set.")
-
 def getInstanceName():
 
-    if os.environ['ENV'] == 'GKE':
-        metadataRequest = requests.get(metadataURLGKE+"/computeMetadata/v1/instance/name",headers=metadataHeader)
-        returnText = metadataRequest.text
-    elif os.environ['ENV'] == 'EKS':
-        metadataRequest = requests.get(metadataURLEKS+"/latest/meta-data/instance-id")
-        returnText = metadataRequest.text
+    if 'ENV' in os.environ:
+        if os.environ['ENV'] == 'GKE':
+            metadataRequest = requests.get(metadataURLGKE+"/computeMetadata/v1/instance/name",headers=metadataHeader)
+            returnText = metadataRequest.text
+        elif os.environ['ENV'] == 'EKS':
+            metadataRequest = requests.get(metadataURLEKS+"/latest/meta-data/instance-id")
+            returnText = metadataRequest.text
+        else:
+            returnText = "App Not Deployed in public cloud"
     else:
-        returnText = "App Not Deployed in public cloud"
+        returnText = "ENV variable not set."
+
+    return returnText
+
+def getPodName():
+# https://stackoverflow.com/questions/40697845/what-is-a-good-practice-to-check-if-an-environmental-variable-exists-or-not
+    if 'MY_POD_NAME' in os.environ:
+        returnText = os.environ['MY_POD_NAME']
+    else:
+        returnText = "MY_POD_NAME is not set."
 
     return returnText
 
@@ -59,13 +68,14 @@ def getEgressIP():
 @app.route('/')
 def index_page():
 
+    podName = getPodName()
     instanceName = getInstanceName()
     instanceExternalIP = getInstanceExternalIP()
     egressIP = getEgressIP()
 
     homeStateCSS = "active"
     alwaysOnMyMindStateCSS = ""
-    return render_template ('index.html', title=nickName+" - "+properName,properName=properName,instanceName=instanceName, instanceExternalIP=instanceExternalIP, egressIP=egressIP, homeStateCSS=homeStateCSS, alwaysOnMyMindStateCSS=alwaysOnMyMindStateCSS)
+    return render_template ('index.html', title=nickName+" - "+properName,podName=podName, properName=properName,instanceName=instanceName, instanceExternalIP=instanceExternalIP, egressIP=egressIP, homeStateCSS=homeStateCSS, alwaysOnMyMindStateCSS=alwaysOnMyMindStateCSS)
 
 @app.route('/always-on-my-mind')
 def always_on_my_mind_page():

@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:jammy
 
 RUN apt update
 RUN apt install curl git gnupg2 build-essential zlib1g-dev sudo python3-pip dnsutils -y
